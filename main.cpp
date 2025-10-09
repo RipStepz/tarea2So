@@ -18,21 +18,29 @@ int main(){
 
     cout << "Ingrese limite de tiempo [10,30]: ";
 
-    if (scanf("%d", &n) == 0){
-        cout << "se ingreso un dato incorrecto, error scanf";
-        return 0; 
+    bool flag = true;
+
+    while (flag){
+        int Anti_Warning = scanf("%d", &n);
+
+        if (Anti_Warning == 0){
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF) {} // limpio el Anti_warning osino quedo pegado pa siempre printenado
+            cout << "se ingreso un dato incorrecto, intente nuevamente con un numero entero en el rango [10,30]: ";
+        }
+        else{
+            if (n < 10 || 30 < n){
+                cout << "Ingrese limite de tiempo [10,30]: ";
+            }
+            else{
+                flag = 0;
+            }
+            
+        }
     }
 
-    else{
-        while (n < 10 || 30 < n){
-            cout << "Ingrese limite de tiempo [10,30]: ";
-            if (scanf("%d", &n) == 0){
-                cout << "se ingreso un dato incorrecto, error scanf" << endl; 
-                return 0;
-            }
-        }
-        cout << endl;
-    }
+    cout << endl;
+
     
     int shmid = shmget(key,sizeof(estados) * n, IPC_CREAT | 0600); // ocupe 0600 para que solo estos procesos puedan acceder, es mas seguro que 0666, aunque pa este caso da lo mismo la verdad :3 PD: si no funciona prueba cambiar 0666xd
     
