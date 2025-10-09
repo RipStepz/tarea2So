@@ -27,6 +27,11 @@ void Alimentos (int prob_exito, int fd[]){
     
 
     close(fd[0]);
-    write(fd[1], array_retorno, peso);
+    
+    if (write(fd[1], array_retorno, peso) < 0){
+        cout << "Hubo un error al leer desde la funcion alimentos" << endl;
+        return;
+    }
+
     close(fd[1]);
 }

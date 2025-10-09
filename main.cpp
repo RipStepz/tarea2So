@@ -7,11 +7,17 @@ using namespace std;
 
 
 
-int main(int argc, char const *argv[]){
+int main(){
     
     int fd[2]; // para agua
     int fd_2[2]; // para alimentos
-    pipe(fd);
+
+    if (pipe(fd) < 0){
+        cout << "Hubo un error al crear el pipe" << endl;
+        return 0;
+    }
+    
+    
     int suerte;
 
 
@@ -41,7 +47,34 @@ int main(int argc, char const *argv[]){
 
     }
     
+    close(fd[1]);
+    close(fd_2[1]);
+
+    int resultado_agua[2]; 
     
+    if (read(fd[0], resultado_agua, sizeof(resultado_agua)) < 0){
+        cout << "Hubo un error desde el main al leer el pipe del agua" << endl;
+        return 0;
+    }
+
+    int resultado_alimentos[2];
+    
+    if (read(fd_2[0], resultado_alimentos, sizeof(resultado_alimentos)) < 0){
+        cout << "Hubo un error desde el main al leer el pipe del alimento" << endl;
+        return 0;
+    }
+    
+
+    close(fd[0]);
+    close(fd_2[0]);
+
+    cout << "Se obtuvo :" << resultado_agua[0] << " de agua" << endl; 
+    cout << "caso : " << resultado_agua[1] <<endl << endl;
+
+    
+     
+    cout << "Se obtuvo :" << resultado_alimentos[0] << " de alimentos" << endl; 
+    cout << "caso : " << resultado_alimentos[1] <<endl;
 
 
 
