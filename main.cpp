@@ -46,7 +46,7 @@ int main(){
     
     if (shmid == -1){
         cout<< "Error al crear la region de memoria compartida y su identificador del bloque de memoria " << endl;
-        return 0;
+        return 1;
 
     }
     
@@ -55,7 +55,7 @@ int main(){
 
     if (pd == (void*) -1){
         cout << "No se pudo adjuntar el segmento de memoria al inventario";
-        return 0;
+        return 1;
     }
 
     int suerte;
@@ -64,19 +64,38 @@ int main(){
     pid_t pid1 = fork();
 
     if (pid1 == 0){ // agua
-        
+        int desvinculacion = shmctl(shmid, IPC_RMID, nullptr); // desvinculo
+
         suerte = rand() % 101;
         Agua(suerte, pd , 0);
-        _exit(0);
+
+        desvinculacion = shmdt(pd);
+
+        if (desvinculacion == -1){
+            cout << "Error al desvincular el proceso del agua de la zona de memoria compartida" << endl;
+            return 1;
+        }
+        else{
+            _exit(0);
+        }
+        
     }
 
     pid_t pid2 = fork();
 
     if (pid2 == 0){ // alimento
-         
+        int desvinculacion = shmctl(shmid, IPC_RMID, nullptr); // desvinculo
+
         suerte = rand() % 101;
         Alimentos(suerte, pd , 0);
-        _exit(0);
+        
+        if (desvinculacion == -1){
+            cout << "Error al desvincular el proceso del alimento de la zona de memoria compartida" << endl;
+            return 1;
+        }
+        else{
+            _exit(0);
+        }
 
     }
 
@@ -89,6 +108,8 @@ int main(){
 
     cout<< "\nSe recolecto: " << pd[0].Recoleccion[1][1] << " de alimento"<< endl;
     cout<< "estado: " << pd[0].Recoleccion[1][0] << endl;
+
+    shmctl(shmid, IPC_RMID, NULL); // termina todo, sino no te elegir una cantidad de iteraciones mayor a la que elejiste la primera vez (ya me paso)
 
     return 0;
 }
