@@ -5,33 +5,20 @@
 
 #include "definicion.hpp"
 
-void Alimentos (int prob_exito, int fd[]){
+void Alimentos (int prob_exito, Inventario* pd, int indice_ronda){
 
     int recoleccion = 12;
-    int Exito[2];
+    int Exito[2]; //pos 0 es la probabilidad, pos 1 es el caso
     exito(prob_exito, Exito);
 
     float ajuste = Exito[0] / 100.0f; // el f es para obligar a que sea flotante la division y no doble
-    int retorno = lround(ajuste * recoleccion);
+    int Recurso = lround(ajuste * recoleccion);
 
-    if (retorno == 8 ){ // ya que todos los minimos son divisibles x2 decidimos que el extra del minimo sera la mitad del minimo, en este caso sera 6
+    if (Recurso == 12 ){ // ya que todos los minimos son divisibles x2 decidimos que el extra del minimo sera la mitad del minimo, en este caso sera 6
         int yapa = rand() % 7;  
-        retorno = retorno + yapa;
+        Recurso = Recurso + yapa;
     }
-
-    int array_retorno[2];
-    array_retorno[0] = retorno;
-    array_retorno[1] = Exito[1];
-
-    int peso = sizeof(array_retorno);
     
-
-    close(fd[0]);
-    
-    if (write(fd[1], array_retorno, peso) < 0){
-        cout << "Hubo un error al leer desde la funcion alimentos" << endl;
-        return;
-    }
-
-    close(fd[1]);
+    pd[indice_ronda].Recoleccion[0][0] =  Exito[1]; // guardo el estado 0,1,2
+    pd[indice_ronda].Recoleccion[0][1] =  Recurso; // ctd de material recolectado
 }

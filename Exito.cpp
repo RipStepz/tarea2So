@@ -12,7 +12,7 @@ defino arbitrariamente;
 2 Como exito 
 
 */ 
-void exito(int prob_exito, int ajuste[]){
+void exito(int prob_exito, int ajuste[]){ // pos 0 es la probabilidad, pos 1 es el caso
     
     if (0 <= prob_exito && prob_exito <= 20){ // Fracaso
         ajuste[0] = rand() % 31;
