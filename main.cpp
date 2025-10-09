@@ -8,12 +8,17 @@ using namespace std;
 
 
 int main(){
-    
+
     int fd[2]; // para agua
     int fd_2[2]; // para alimentos
 
     if (pipe(fd) < 0){
-        cout << "Hubo un error al crear el pipe" << endl;
+        cout << "Hubo un error al crear el pipe del agua" << endl;
+        return 0;
+    }
+
+    if (pipe(fd_2) < 0){
+        cout << "Hubo un error al crear el pipe del alimento" << endl;
         return 0;
     }
     
@@ -25,25 +30,29 @@ int main(){
 
     if (pid1 == 0){ // hijo
         
+        srand(time(nullptr));
         suerte = rand() % 101;
         close(fd[0]);
         close(fd_2[0]);
         close(fd_2[1]);
 
         Agua(suerte, fd);
+        _exit(0);  
 
     }
 
     pid_t pid2 = fork();
 
     if (pid2 == 0){ // hijo
-         
+        
+        srand(time(nullptr));
         suerte = rand() % 101;
         close(fd_2[0]);
         close(fd[0]);
         close(fd[1]);
 
         Alimentos(suerte, fd_2);
+        _exit(0);  
 
     }
     
