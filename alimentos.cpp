@@ -19,6 +19,6 @@ void Alimentos (int prob_exito, Inventario* pd, int indice_ronda){
         Recurso = Recurso + yapa;
     }
     
-    pd[indice_ronda].Recoleccion[0][0] =  Exito[1]; // guardo el estado 0,1,2
-    pd[indice_ronda].Recoleccion[0][1] =  Recurso; // ctd de material recolectado
+    pd[indice_ronda].Recoleccion[1][0] =  Exito[1]; // guardo el estado 0,1,2
+    pd[indice_ronda].Recoleccion[1][1] =  Recurso; // ctd de material recolectado
 }
