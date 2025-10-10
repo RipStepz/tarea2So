@@ -21,7 +21,7 @@ int main(){
     bool flag = true;
 
     while (flag){
-        int Anti_Warning = scanf("%d", &n);
+        int Anti_Warning = scanf("%d", &n);//amigadelarturo
 
         if (Anti_Warning == 0){
             int c;
@@ -63,52 +63,173 @@ int main(){
 
     pid_t pid1 = fork();
 
-    if (pid1 == 0){ // agua
-        int desvinculacion = shmctl(shmid, IPC_RMID, nullptr); // desvinculo
+    if (pid1 < 0){
 
-        suerte = rand() % 101;
-        Agua(suerte, pd , 0);
-
-        desvinculacion = shmdt(pd);
-
-        if (desvinculacion == -1){
-            cout << "Error al desvincular el proceso del agua de la zona de memoria compartida" << endl;
-            return 1;
-        }
-        else{
-            _exit(0);
-        }
+        cout<< "error al crear el proceso Agua"; 
+        return 1;
+    }
+    
+    if (pid1 == 0){
         
+        srand((unsigned)time(nullptr) ^ ((unsigned)getpid() << 16)); // para que no todos los randoms sean iguales
+
+        for (int i = 0; i < n; i++){
+
+            int desvinculacion = shmctl(shmid, IPC_RMID, nullptr); // desvinculo
+
+            suerte = rand() % 101;
+            Agua(suerte, pd , i);
+
+            desvinculacion = shmdt(pd);
+
+            if (desvinculacion == -1){
+                cout << "Error al desvincular el proceso del agua de la zona de memoria compartida" << endl;
+                return 1;
+            }
+            else{
+
+                int limite = n-1;
+
+                if (i == limite){
+                shmdt(pd);
+                _exit(0);
+                } 
+            }    
+        }
     }
 
     pid_t pid2 = fork();
 
-    if (pid2 == 0){ // alimento
-        int desvinculacion = shmctl(shmid, IPC_RMID, nullptr); // desvinculo
+     if (pid2 < 0){
 
-        suerte = rand() % 101;
-        Alimentos(suerte, pd , 0);
-        
-        if (desvinculacion == -1){
-            cout << "Error al desvincular el proceso del alimento de la zona de memoria compartida" << endl;
-            return 1;
-        }
-        else{
-            _exit(0);
-        }
+        cout<< "error al crear el proceso Alimentos"; 
+        return 1;
+    }
 
+    if (pid2 == 0){
+   
+        srand((unsigned)time(nullptr) ^ ((unsigned)getpid() << 16)); // para que no todos los randoms sean iguales
+
+        for (int i = 0; i < n; i++){
+
+            int desvinculacion = shmctl(shmid, IPC_RMID, nullptr); // desvinculo
+
+            suerte = rand() % 101;
+            Alimentos(suerte, pd , i);
+                
+            if (desvinculacion == -1){
+                cout << "Error al desvincular el proceso del alimento de la zona de memoria compartida" << endl;
+                return 1;
+            }
+            else{
+
+                int limite = n-1;
+                    
+                if (i == limite){
+                shmdt(pd);
+                _exit(0);
+                } 
+            }  
+        }
+    }
+    
+    pid_t pid3 = fork();
+
+    if (pid3 < 0){
+
+        cout<< "error al crear el proceso Refugio"; 
+        return 1;
+    }
+    
+    if (pid3 == 0){
+
+        srand((unsigned)time(nullptr) ^ ((unsigned)getpid() << 16)); // para que no todos los randoms sean iguales
+
+        for (int i = 0; i < n; i++){
+            
+            int desvinculacion = shmctl(shmid, IPC_RMID, nullptr); // desvinculo
+
+            suerte = rand() % 101;
+            Refugio(suerte, pd , i);
+                
+            if (desvinculacion == -1){
+                cout << "Error al desvincular el proceso del refugio de la zona de memoria compartida" << endl;
+                return 1;
+            }
+            else{
+
+                int limite = n-1;
+                    
+                if (i == limite){
+                shmdt(pd);
+                _exit(0);
+                } 
+            }       
+        }
+    }
+
+
+    pid_t pid4 = fork();
+
+    if (pid4 < 0){
+
+        cout<< "error al crear el proceso Señales"; 
+        return 1;
+    }
+
+    if (pid4 ==0){   
+    
+        srand((unsigned)time(nullptr) ^ ((unsigned)getpid() << 16)); // para que no todos los randoms sean iguales
+
+        for (int i = 0; i < n; i++){
+            
+            int desvinculacion = shmctl(shmid, IPC_RMID, nullptr); // desvinculo
+
+            suerte = rand() % 101;
+            Senales(suerte, pd , i);
+                
+            if (desvinculacion == -1){
+                cout << "Error al desvincular el proceso de las señales de la zona de memoria compartida" << endl;
+                return 1;
+            }
+            else{
+                    
+                int limite = n-1;
+                    
+                if (i == limite){
+                shmdt(pd);
+                _exit(0);
+                } 
+            }
+        }
     }
 
     int status; //necesario para esperar
     waitpid(pid1, &status , 0);
     waitpid(pid2, &status , 0);
+    waitpid(pid3, &status , 0);
+    waitpid(pid4, &status , 0);
 
-    cout<< "Se recolecto: " << pd[0].Recoleccion[0][1] << " de agua"<< endl;
-    cout<< "estado: " << pd[0].Recoleccion[0][0] << endl;
+    for (int i = 0; i < n; i++){
+       
+        cout << "Dia: " << i+1 << endl << endl;
 
-    cout<< "\nSe recolecto: " << pd[0].Recoleccion[1][1] << " de alimento"<< endl;
-    cout<< "estado: " << pd[0].Recoleccion[1][0] << endl;
+        cout<< "Se recolecto: " << pd[i].Recoleccion[0][1] << " de agua"<< endl;
+        cout<< "estado: " << pd[i].Recoleccion[0][0] << endl;
 
+        cout<< "\nSe recolecto: " << pd[i].Recoleccion[1][1] << " de alimento"<< endl;
+        cout<< "estado: " << pd[i].Recoleccion[1][0] << endl<< endl;
+
+        cout<< "Se recolecto: " << pd[i].Recoleccion[2][1] << " de refugio"<< endl;
+        cout<< "estado: " << pd[i].Recoleccion[2][0] << endl ;
+
+        cout<< "\nSe recolecto: " << pd[i].Recoleccion[3][1] << " de señales"<< endl;
+        cout<< "estado: " << pd[i].Recoleccion[3][0] << endl;
+
+        cout <<"--------------------------------------------------------" << endl << endl;
+    }
+
+    shmdt(pd);
     shmctl(shmid, IPC_RMID, NULL); // termina todo, sino no te elegir una cantidad de iteraciones mayor a la que elejiste la primera vez (ya me paso)
 
     return 0;

@@ -21,6 +21,8 @@ struct Inventario{
 
 void Agua(int prob_exito, Inventario* pd, int indice_ronda);
 void Alimentos (int prob_exito, Inventario* pd, int indice_ronda);
+void Refugio (int prob_exito, Inventario* pd, int indice_ronda);
+void Senales (int prob_exito, Inventario* pd, int indice_ronda);
 void exito(int prob_exito, int array_retorno[]);
 
 

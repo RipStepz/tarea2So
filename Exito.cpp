@@ -17,7 +17,7 @@ void exito(int prob_exito, int ajuste[]){ // pos 0 es la probabilidad, pos 1 es 
     if (0 <= prob_exito && prob_exito <= 20){ // Fracaso
         ajuste[0] = rand() % 31;
         ajuste[1] = 0;
-
+        //amigadelarturo
     }
 
     else if (20 < prob_exito && prob_exito <= 70){ // Exito parcial
