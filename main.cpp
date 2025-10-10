@@ -58,6 +58,8 @@ int main(){
         return 1;
     }
 
+    pd->Moral = 20;
+
     int suerte;
 
 
@@ -167,10 +169,11 @@ int main(){
 
     for (int i = 0; i < n; i++){
        
-        cout << "Dia: " << i+1 << endl << endl;
+        cout << "Dia: " << i+1 << endl;
+        cout << "La moral es: " <<pd[i].Moral << endl; // actualiza la moral << endl<< endl;
 
         cout<< "Se recolecto: " << pd[i].Recoleccion[0][1] << " de agua"<< endl;
-        cout<< "estado: " << pd[i].Recoleccion[0][0] << endl;
+        cout<< "estado: " << pd[i].Recoleccion[0][0] << endl<< endl;
 
         cout<< "\nSe recolecto: " << pd[i].Recoleccion[1][1] << " de alimento"<< endl;
         cout<< "estado: " << pd[i].Recoleccion[1][0] << endl<< endl;

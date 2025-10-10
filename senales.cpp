@@ -19,7 +19,10 @@ void Senales(int prob_exito, Inventario* pd, int indice_ronda){
         Recurso = Recurso + yapa;
     }
     
+    int PonderadorMoral = moral(Exito[1], pd->Moral);
+    
     pd[indice_ronda].Recoleccion[3][0] =  Exito[1]; // guardo el estado 0,1,2
     pd[indice_ronda].Recoleccion[3][1] =  Recurso; // ctd de material recolectado
+    pd[indice_ronda].Moral = PonderadorMoral; // actualiza la moral
 
 }

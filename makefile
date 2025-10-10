@@ -8,7 +8,7 @@ CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic -O2
 
 # Archivos fuente
-SRCS = main.cpp agua.cpp alimentos.cpp Exito.cpp refugio.cpp senales.cpp
+SRCS = main.cpp agua.cpp alimentos.cpp Exito.cpp refugio.cpp senales.cpp moral.cpp
 
 # Archivos objeto (mismo nombre pero extensión .o)
 OBJS = $(SRCS:.cpp=.o)

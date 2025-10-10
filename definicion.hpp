@@ -6,6 +6,7 @@ using namespace std;
 
 struct Inventario{
     int Recoleccion[4][2];
+    int Moral;
     /*
     Cada fila representa los recursos recolectados:
     pos 0: Agua
@@ -19,11 +20,15 @@ struct Inventario{
     */
 };
 
+//procesos
 void Agua(int prob_exito, Inventario* pd, int indice_ronda);
 void Alimentos (int prob_exito, Inventario* pd, int indice_ronda);
 void Refugio (int prob_exito, Inventario* pd, int indice_ronda);
 void Senales (int prob_exito, Inventario* pd, int indice_ronda);
+
+//funciones auxiliares
 void exito(int prob_exito, int array_retorno[]);
+int moral(int estado, int MoralActual);
 
 
 
