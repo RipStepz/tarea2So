@@ -17,6 +17,9 @@ struct Inventario{
     Cada columna:
     [x][0] = estado (0,1,2) codificados como 0 fracaso, 1 exito parcial, 2 exito
     [x][1] = ctd materiales recolectado
+
+    Moral, es solo una variable
+
     */
 };
 

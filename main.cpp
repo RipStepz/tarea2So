@@ -167,8 +167,23 @@ int main(){
     waitpid(pid3, &status , 0);
     waitpid(pid4, &status , 0);
 
+    int ContadorSeñales = 0;
+
     for (int i = 0; i < n; i++){
        
+        
+        if (pd[i].Moral == 0){
+            cout << "La moral del equipo llego a 0, perdiste"<<endl;
+            return 0;
+        }
+
+        if (pd[i].Recoleccion[3][0] == 2){
+            ContadorSeñales += 1 ;
+        }
+        else{
+            ContadorSeñales = 0;
+        }
+        getchar();
         cout << "Dia: " << i+1 << endl;
         cout << "La moral es: " <<pd[i].Moral << endl; // actualiza la moral << endl<< endl;
 
@@ -185,8 +200,17 @@ int main(){
         cout<< "estado: " << pd[i].Recoleccion[3][0] << endl;
 
         cout <<"--------------------------------------------------------" << endl << endl;
+        
+
+        if (ContadorSeñales == 10){
+            cout << "Has logrado mantener las señales de humo 10 dias seguidos prendidas, has ganado"<<endl;
+        }
+
+        
+        
     }
 
+    cout << "Se acabaron los dias y no fuiste rescatado, perdiste"<<endl;
     shmdt(pd);
     shmctl(shmid, IPC_RMID, NULL); // termina todo, sino no te elegir una cantidad de iteraciones mayor a la que elejiste la primera vez (ya me paso)
 
