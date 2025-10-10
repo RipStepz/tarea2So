@@ -30,5 +30,4 @@ void exito(int prob_exito, int ajuste[]){ // pos 0 es la probabilidad, pos 1 es 
         ajuste[1] = 2;
     }
     
-    
 }
