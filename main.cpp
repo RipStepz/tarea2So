@@ -75,28 +75,15 @@ int main(){
 
         for (int i = 0; i < n; i++){
 
-            int desvinculacion = shmctl(shmid, IPC_RMID, nullptr); // desvinculo
-
             suerte = rand() % 101;
-            Agua(suerte, pd , i);
-
-            desvinculacion = shmdt(pd);
-
-            if (desvinculacion == -1){
-                cout << "Error al desvincular el proceso del agua de la zona de memoria compartida" << endl;
-                return 1;
+            Agua(suerte, pd , i);             
+                  
             }
-            else{
 
-                int limite = n-1;
+        shmdt(pd);
+        _exit(0);    
 
-                if (i == limite){
-                shmdt(pd);
-                _exit(0);
-                } 
-            }    
         }
-    }
 
     pid_t pid2 = fork();
 
@@ -112,26 +99,16 @@ int main(){
 
         for (int i = 0; i < n; i++){
 
-            int desvinculacion = shmctl(shmid, IPC_RMID, nullptr); // desvinculo
-
             suerte = rand() % 101;
-            Alimentos(suerte, pd , i);
-                
-            if (desvinculacion == -1){
-                cout << "Error al desvincular el proceso del alimento de la zona de memoria compartida" << endl;
-                return 1;
+            Alimentos(suerte, pd , i);             
+                  
             }
-            else{
 
-                int limite = n-1;
-                    
-                if (i == limite){
-                shmdt(pd);
-                _exit(0);
-                } 
-            }  
-        }
+        shmdt(pd);
+        _exit(0);    
+
     }
+    
     
     pid_t pid3 = fork();
 
@@ -146,27 +123,17 @@ int main(){
         srand((unsigned)time(nullptr) ^ ((unsigned)getpid() << 16)); // para que no todos los randoms sean iguales
 
         for (int i = 0; i < n; i++){
-            
-            int desvinculacion = shmctl(shmid, IPC_RMID, nullptr); // desvinculo
 
             suerte = rand() % 101;
-            Refugio(suerte, pd , i);
-                
-            if (desvinculacion == -1){
-                cout << "Error al desvincular el proceso del refugio de la zona de memoria compartida" << endl;
-                return 1;
+            Refugio(suerte, pd , i);             
+                  
             }
-            else{
 
-                int limite = n-1;
-                    
-                if (i == limite){
-                shmdt(pd);
-                _exit(0);
-                } 
-            }       
+        shmdt(pd);
+        _exit(0);    
+
         }
-    }
+    
 
 
     pid_t pid4 = fork();
@@ -181,27 +148,15 @@ int main(){
     
         srand((unsigned)time(nullptr) ^ ((unsigned)getpid() << 16)); // para que no todos los randoms sean iguales
 
-        for (int i = 0; i < n; i++){
-            
-            int desvinculacion = shmctl(shmid, IPC_RMID, nullptr); // desvinculo
+         for (int i = 0; i < n; i++){
 
             suerte = rand() % 101;
-            Senales(suerte, pd , i);
-                
-            if (desvinculacion == -1){
-                cout << "Error al desvincular el proceso de las señales de la zona de memoria compartida" << endl;
-                return 1;
+            Senales(suerte, pd , i);             
+                  
             }
-            else{
-                    
-                int limite = n-1;
-                    
-                if (i == limite){
-                shmdt(pd);
-                _exit(0);
-                } 
-            }
-        }
+
+        shmdt(pd);
+        _exit(0); 
     }
 
     int status; //necesario para esperar
