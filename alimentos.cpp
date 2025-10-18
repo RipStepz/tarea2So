@@ -5,7 +5,7 @@
 
 #include "definicion.hpp"
 
-void Alimentos (int prob_exito, Inventario* pd, int indice_ronda){
+void Alimentos (int prob_exito, Inventario* pd, int indice_ronda, int pid){
 
     int recoleccion = 12;
     int Exito[2]; //pos 0 es la probabilidad, pos 1 es el caso
@@ -24,4 +24,5 @@ void Alimentos (int prob_exito, Inventario* pd, int indice_ronda){
     pd[indice_ronda].Recoleccion[1][0] =  Exito[1]; // guardo el estado 0,1,2
     pd[indice_ronda].Recoleccion[1][1] =  Recurso; // ctd de material recolectado
     pd[indice_ronda].Moral = PonderadorMoral; // actualiza la moral
+    pd[indice_ronda].pid[1][0] = pid;
 }

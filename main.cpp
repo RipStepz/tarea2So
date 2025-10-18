@@ -67,18 +67,22 @@ int main(){
 
     if (pid1 < 0){
 
-        cout<< "error al crear el proceso Agua"; 
+        cout<< "error al crear el proceso Agua pid: "; 
+        
         return 1;
     }
     
     if (pid1 == 0){
         
+        pid_t pid1_hijo = getpid();
+
         srand((unsigned)time(nullptr) ^ ((unsigned)getpid() << 16)); // para que no todos los randoms sean iguales
 
         for (int i = 0; i < n; i++){
 
             suerte = rand() % 101;
-            Agua(suerte, pd , i);             
+            
+            Agua(suerte, pd , i , (int)pid1_hijo);             
                   
             }
 
@@ -96,13 +100,15 @@ int main(){
     }
 
     if (pid2 == 0){
-   
+
+        pid_t pid2_hijo = getpid();
+
         srand((unsigned)time(nullptr) ^ ((unsigned)getpid() << 16)); // para que no todos los randoms sean iguales
 
         for (int i = 0; i < n; i++){
 
             suerte = rand() % 101;
-            Alimentos(suerte, pd , i);             
+            Alimentos(suerte, pd , i , (int)pid2_hijo);             
                   
             }
 
@@ -122,12 +128,14 @@ int main(){
     
     if (pid3 == 0){
 
+        pid_t pid3_hijo = getpid();
+
         srand((unsigned)time(nullptr) ^ ((unsigned)getpid() << 16)); // para que no todos los randoms sean iguales
 
         for (int i = 0; i < n; i++){
 
             suerte = rand() % 101;
-            Refugio(suerte, pd , i);             
+            Refugio(suerte, pd , i , (int)pid3_hijo);             
                   
             }
 
@@ -148,12 +156,14 @@ int main(){
 
     if (pid4 ==0){   
     
+        pid_t pid4_hijo = getpid();
+
         srand((unsigned)time(nullptr) ^ ((unsigned)getpid() << 16)); // para que no todos los randoms sean iguales
 
          for (int i = 0; i < n; i++){
 
             suerte = rand() % 101;
-            Senales(suerte, pd , i);             
+            Senales(suerte, pd , i, (int)pid4_hijo);             
                   
             }
 
@@ -184,20 +194,40 @@ int main(){
             ContadorSeñales = 0;
         }
         getchar();
-        cout << "Dia: " << i+1 << endl;
-        cout << "La moral es: " <<pd[i].Moral << endl; // actualiza la moral << endl<< endl;
+        cout << "=== DÍA " << i+1 << " DE SUPERVIVENCIA ==="<< endl;
+        cout << "Iniciando equipos de recolección... " << endl;
+        
+        cout<< "[EQUIPO AGUA - PID: "<< pd[i].pid[0][0] << "] Explorando fuentes de agua..." << endl;
+        cout<< "[EQUIPO ALIMENTOS - PID: "<< pd[i].pid[1][0] << "] Explorando territorios para cazar..." << endl;
+        cout<< "[EQUIPO CONSTRUCCION - PID: "<< pd[i].pid[2][0] << "] Buscando materiales de construcción" << endl;
+        cout<< "[EQUIPO SEÑALES - PID: "<< pd[i].pid[3][0] << "] Recolectando combustible seco..." << endl<<endl;
 
-        cout<< "Se recolecto: " << pd[i].Recoleccion[0][1] << " de agua"<< endl;
-        cout<< "estado: " << pd[i].Recoleccion[0][0] << endl<< endl;
+        cout<< "[EQUIPO AGUA - PID: "<< pd[i].pid[0][0] << "] Recolectando agua del arroyo encontrado..." << endl;
+        cout<< "[EQUIPO ALIMENTOS - PID: "<< pd[i].pid[1][0] << "] Intentando pescar en la laguna..." << endl;
+        cout<< "[EQUIPO CONSTRUCCION - PID: "<< pd[i].pid[2][0] << "] Cortando ramas útiles..." << endl;
+        cout<< "[EQUIPO SEÑALES - PID: "<< pd[i].pid[3][0] << "] Manteniendo fogata de señales..." << endl<<endl;
 
-        cout<< "\nSe recolecto: " << pd[i].Recoleccion[1][1] << " de alimento"<< endl;
-        cout<< "estado: " << pd[i].Recoleccion[1][0] << endl<< endl;
+        cout<< "[EQUIPO AGUA - PID: "<< pd[i].pid[0][0] << "] Purificando agua recolectada..." << endl;
+        cout<< "[EQUIPO ALIMENTOS - PID: "<< pd[i].pid[1][0] << "] Capturado pez pequeño!!! Preparando..." << endl;
+        cout<< "[EQUIPO CONSTRUCCION - PID: "<< pd[i].pid[2][0] << "] Construyendo refugio..." << endl;
+        cout<< "[EQUIPO SEÑALES - PID: "<< pd[i].pid[3][0] << "] Creando señales de humo..." << endl<<endl;
 
-        cout<< "Se recolecto: " << pd[i].Recoleccion[2][1] << " de refugio"<< endl;
-        cout<< "estado: " << pd[i].Recoleccion[2][0] << endl ;
+        cout<< "REPORTES FINALES: " << endl;
+        
+        cout << "- Equipo Agua completó ciclo: " << pd[i].Recoleccion[0][1] << " unidades de agua obtenidas" << endl;
+        cout << "- Equipo Alimentos completó ciclo: " << pd[i].Recoleccion[1][1] << " unidades de alimento obtenidas" << endl;
+        cout << "- Equipo Construcción completó ciclo: " << pd[i].Recoleccion[2][1] << " unidades de material obtenidas" << endl;
+        cout << "- Equipo Señales completó ciclo: " << pd[i].Recoleccion[3][1] << " unidades de señal obtenidas" << endl<<endl;
 
-        cout<< "\nSe recolecto: " << pd[i].Recoleccion[3][1] << " de señales"<< endl;
-        cout<< "estado: " << pd[i].Recoleccion[3][0] << endl;
+        cout<< "RESULTADOS DEL DIA: " << endl;
+
+        cout << "Estado de recolección equipo agua: " << pd[i].Recoleccion[0][0] << endl;
+        cout << "Estado de recolección equipo alimentos: " << pd[i].Recoleccion[1][0] << endl;
+        cout << "Estado de recolección equipo materiales: " << pd[i].Recoleccion[2][0] << endl;
+        cout << "Estado de recolección equipo señales: " << pd[i].Recoleccion[3][0] << endl<<endl;
+
+
+        cout << "La moral del grupo es: " <<pd[i].Moral << endl<<endl; // actualiza la moral << endl<< endl;
 
         cout <<"--------------------------------------------------------" << endl << endl;
         
