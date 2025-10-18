@@ -4,10 +4,12 @@
 #include <sys/mman.h>   
 #include <sys/wait.h> 
 #include <sys/shm.h>
+#include <cmath>
+
 
 #include "definicion.hpp"
-using namespace std;
 
+using namespace std;
 
 int main(){
 
@@ -58,7 +60,7 @@ int main(){
         return 1;
     }
 
-    pd->Moral = 20;
+    pd->Moral = 100;
 
     int suerte;
 
@@ -221,10 +223,45 @@ int main(){
 
         cout<< "RESULTADOS DEL DIA: " << endl;
 
-        cout << "Estado de recolección equipo agua: " << pd[i].Recoleccion[0][0] << endl;
-        cout << "Estado de recolección equipo alimentos: " << pd[i].Recoleccion[1][0] << endl;
-        cout << "Estado de recolección equipo materiales: " << pd[i].Recoleccion[2][0] << endl;
-        cout << "Estado de recolección equipo señales: " << pd[i].Recoleccion[3][0] << endl<<endl;
+        if (pd[i].Recoleccion[0][0] == 0){
+            cout << "Estado de recolección equipo agua: Fracaso " << endl;
+        }
+        else if(pd[i].Recoleccion[0][0] == 1){
+            cout << "Estado de recolección equipo agua: Exito parcial " << endl;
+        }
+        else if(pd[i].Recoleccion[1][0] == 2){
+            cout << "Estado de recolección equipo agua: Exito " << endl;
+        }
+
+        if (pd[i].Recoleccion[1][0] == 0){
+            cout << "Estado de recolección equipo alimentos: Fracaso " << endl;
+        }
+        else if(pd[i].Recoleccion[1][0] == 1){
+            cout << "Estado de recolección equipo alimentos: Exito parcial " << endl;
+        }
+        else if(pd[i].Recoleccion[1][0] == 2){
+            cout << "Estado de recolección equipo alimentos: Exito " << endl;
+        }
+
+        if (pd[i].Recoleccion[2][0] == 0){
+            cout << "Estado de recolección equipo materiales: Fracaso " << endl;
+        }
+        else if(pd[i].Recoleccion[2][0] == 1){
+            cout << "Estado de recolección equipo materiales: Exito parcial " << endl;
+        }
+        else if(pd[i].Recoleccion[2][0] == 2){
+            cout << "Estado de recolección equipo materiales: Exito " << endl;
+        }
+
+        if (pd[i].Recoleccion[3][0] == 0){
+            cout << "Estado de recolección equipo señales: Fracaso " << endl;
+        }
+        else if(pd[i].Recoleccion[3][0] == 1){
+            cout << "Estado de recolección equipo señales: Exito parcial " << endl;
+        }
+        else if(pd[i].Recoleccion[3][0] == 2){
+            cout << "Estado de recolección equipo señales: Exito " << endl;
+        }
 
 
         cout << "La moral del grupo es: " <<pd[i].Moral << endl<<endl; // actualiza la moral << endl<< endl;
